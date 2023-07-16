@@ -1,8 +1,14 @@
 import styled from "styled-components";
 
 
-export const LayOut = styled.div`
-  margin: 0 auto;
-  max-width: 1200px;
-  min-width: 800px;
+export const FooterContainer = styled.div`
+  height: 150px;
+  padding: 30px;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  background: lightgray;
+  color: #333;
+  font-weight: 600;
+  flex-shrink: 0;
 `;

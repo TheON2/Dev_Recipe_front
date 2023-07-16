@@ -4,8 +4,9 @@ import { Outlet } from "react-router-dom";
 import {
     GlobalStyle,
     MainContainer,
-Root,Footer
+Root
 } from "./style";
+import Footer from "../Footer/Footer";
 
 const Main = () => {
     return (
