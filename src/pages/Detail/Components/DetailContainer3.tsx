@@ -16,8 +16,9 @@ const DetailContainer3 = ({idx,content,imageUrl}) => {
                 padding: "20px"
             }}
         >
-        <div style={{margin:"30px"}}>
-            <h3 >{content? content : `STEP${idx? idx: 1} 돼지고기는 적당한 크기로 잘라줍니다.`}</h3>
+        <div style={{margin:"0 20px"}}>
+            <h1>STEP {idx+1}</h1>
+            <h3 >{content? content : `STEP${idx? idx+1: 1} 돼지고기는 적당한 크기로 잘라줍니다.`}</h3>
             <Image
                 src={imageUrl ? imageUrl : "https://img.freepik.com/free-photo/assortment-of-vegetables-herbs-and-spices-on-black-background-top-view-copy-space_123827-21707.jpg"}
                 style={{width: '30%', height: '100%'}}

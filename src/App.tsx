@@ -22,7 +22,7 @@ const App: FC = () => {
                     <Route path="/SignUp" element={<SignUp />} />
                     <Route path="/" element={<Main />}>
                         <Route index element={<Home />} /> {/* "Home" 컴포넌트는 메인 페이지에 해당하는 컴포넌트를 의미합니다. */}
-                        <Route path="/Detail" element={<Detail />} />
+                        <Route path="/:id" element={<Detail />} />
                         <Route path="/RecipeList" element={<RecipeListPage />} />
                         <Route path="/RecipeRanking" element={<RecipeRankingPage />} />
                         <Route path="/Mypage" element={<Mypage />} />

@@ -21,6 +21,7 @@ export const Container2 = styled.div`
           0 10px 10px rgba(0, 0, 0, 0.22);
   align-content: center;
   display: flex;
+  position:relative;
   flex-direction: column;
   &::-webkit-scrollbar {
     display: none;

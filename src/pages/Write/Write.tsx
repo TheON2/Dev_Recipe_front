@@ -9,6 +9,7 @@ import WriteContainer4 from "./Components/WriteContainer4";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {ADD_RECIPE} from "../../redux/reducers/recipeSlice";
+import {v4 as uuidv4} from 'uuid'
 
 const Write = () => {
     const navigate = useNavigate()
@@ -16,12 +17,12 @@ const Write = () => {
     const [title, onChangeTitle] = useInput<string | undefined>("");
     const [subtitle, onChangeSubtitle] = useInput<string | undefined>("");
     const [url, onChangeUrl] = useInput<string | undefined>("");
-    const [category1, onChangeCategory1] = useInput<number | undefined>(1);
-    const [category2, onChangeCategory2] = useInput<number | undefined>(1);
-    const [category3, onChangeCategory3] = useInput<number | undefined>(1);
-    const [category4, onChangeCategory4] = useInput<number | undefined>(1);
-    const [ingredients, onChangeIngredients] = useArrayInput(["", "", "", "", "", "", "", "", "", "", "", ""],12);
-    const [contentArr, onChangeContentArr, setContentArr] = useArrayInput(["",],10);
+    const [category1, onChangeCategory1] = useInput<string | undefined>("메인반찬");
+    const [category2, onChangeCategory2] = useInput<string | undefined>("일상");
+    const [category3, onChangeCategory3] = useInput<string | undefined>("볶음");
+    const [category4, onChangeCategory4] = useInput<string | undefined>("소고기");
+    const [ingredients, onChangeIngredients,setIngredients,addIngredients,deleteIngredients,delIdxIngredients] = useArrayInput(["",], 12);
+    const [contentArr, onChangeContentArr, setContentArr, addContentArr, deleteContentArr, delIdxContentArr] = useArrayInput(["",], 10);
     const [content, onChangeContent] = useInput<string | undefined>("");
     const [tip, onChangeTip] = useInput<string | undefined>("");
     const [file, setFile] = useState<File | null>(null);
@@ -30,7 +31,7 @@ const Write = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('image', file||'');
+        formData.append('image', file || '');
         formData.append('title', title || '');
         formData.append('subtitle', subtitle || '');
         formData.append('category1', String(category1));
@@ -38,12 +39,13 @@ const Write = () => {
         formData.append('category3', String(category3));
         formData.append('category4', String(category4));
         formData.append('ingredients', JSON.stringify(ingredients));
-        formData.append('content', content || '');
+        formData.append('contentArr', JSON.stringify(content));
         formData.append('tip', tip || '');
         formData.append('url', url || '');
+        formData.append('comment', JSON.stringify(content));
 
         const newRecipe = {
-            title,subtitle,category1,category2,category3,category4,content,tip,url,ingredients
+            id: uuidv4(),title, subtitle, category1, category2, category3, category4, contentArr, tip, url, ingredients,comment:[]
         }
         dispatch(ADD_RECIPE(newRecipe))
         alert("성공적으로 등록 되었습니다!")
@@ -72,8 +74,13 @@ const Write = () => {
                                  onChangeCategory2={onChangeCategory2} onChangeCategory3={onChangeCategory3}
                                  onChangeCategory4={onChangeCategory4} onChangeSubtitle={onChangeSubtitle}
                                  onChangeTitle={onChangeTitle} onChangeUrl={onChangeUrl}/>
-                <WriteContainer2 ingredients={ingredients} onChangeIngredients={onChangeIngredients}/>
-                <WriteContainer3 onChangeContent={onChangeContent}/>
+                <WriteContainer2 ingredients={ingredients} onChangeIngredients={onChangeIngredients}
+                                 addIngredients={addIngredients} deleteIngredients={deleteIngredients}
+                                 delIdxIngredients={delIdxIngredients}
+                />
+                <WriteContainer3 onChangeContentArr={onChangeContentArr} addContentArr={addContentArr}
+                                 contentArr={contentArr} deleteContentArr={deleteContentArr}
+                                 delIdxContentArr={delIdxContentArr}/>
                 <WriteContainer4 onChangeTip={onChangeTip}/>
             </Form>
         </>

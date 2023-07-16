@@ -4,8 +4,15 @@ import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import {Figure, Image} from "react-bootstrap"
+import CommentBox from "./CommentBox";
+import {RootState} from "../../../type/local";
+import {useSelector} from "react-redux";
 
-const DetailContainer5 = () => {
+const DetailContainer5 = ({recipeId}) => {
+    const { recipes } = useSelector((state: RootState) => state.recipes);
+    const recipe = recipes?.find((recipe) => recipe.id === recipeId);
+    const comments = recipe?.comment || [];
+
     return (
         <Container2
             id="maincontent"
@@ -19,99 +26,11 @@ const DetailContainer5 = () => {
             }}
         >
             <div style={{margin:"0",padding:"0"}}>
-                <h3>Comment 6</h3>
+                <h3>Comment {comments.length}</h3>
             </div>
-
-            <Container2>
-                <Figure style={{display:"flex"}}>
-                    <Image
-                        src={"https://img.freepik.com/free-photo/assortment-of-vegetables-herbs-and-spices-on-black-background-top-view-copy-space_123827-21707.jpg"}
-                        style={{width: '10%', height: '100%',margin:"10px"}}
-                        roundedCircle
-                    />
-                    <Figure.Caption>
-                        <div style={{display:"flex",gap:"10px"}}>
-                            <h3>User</h3> <a style={{margin:"0 5px"}}>2023-07-01 01:36</a>
-                        </div>
-                        <a>행복하게 살고싶다~~</a>
-                    </Figure.Caption>
-                </Figure>
-            </Container2>
-            <Container2>
-                <Figure style={{display:"flex"}}>
-                    <Image
-                        src={"https://img.freepik.com/free-photo/assortment-of-vegetables-herbs-and-spices-on-black-background-top-view-copy-space_123827-21707.jpg"}
-                        style={{width: '10%', height: '100%',margin:"10px"}}
-                        roundedCircle
-                    />
-                    <Figure.Caption>
-                        <div style={{display:"flex",gap:"10px"}}>
-                            <h3>User</h3> <a style={{margin:"0 5px"}}>2023-07-01 01:36</a>
-                        </div>
-                        <a>행복하게 살고싶다~~</a>
-                    </Figure.Caption>
-                </Figure>
-            </Container2>
-            <Container2>
-                <Figure style={{display:"flex"}}>
-                    <Image
-                        src={"https://img.freepik.com/free-photo/assortment-of-vegetables-herbs-and-spices-on-black-background-top-view-copy-space_123827-21707.jpg"}
-                        style={{width: '10%', height: '100%',margin:"10px"}}
-                        roundedCircle
-                    />
-                    <Figure.Caption>
-                        <div style={{display:"flex",gap:"10px"}}>
-                            <h3>User</h3> <a style={{margin:"0 5px"}}>2023-07-01 01:36</a>
-                        </div>
-                        <a>행복하게 살고싶다~~</a>
-                    </Figure.Caption>
-                </Figure>
-            </Container2>
-            <Container2>
-                <Figure style={{display:"flex"}}>
-                    <Image
-                        src={"https://img.freepik.com/free-photo/assortment-of-vegetables-herbs-and-spices-on-black-background-top-view-copy-space_123827-21707.jpg"}
-                        style={{width: '10%', height: '100%',margin:"10px"}}
-                        roundedCircle
-                    />
-                    <Figure.Caption>
-                        <div style={{display:"flex",gap:"10px"}}>
-                            <h3>User</h3> <a style={{margin:"0 5px"}}>2023-07-01 01:36</a>
-                        </div>
-                        <a>행복하게 살고싶다~~</a>
-                    </Figure.Caption>
-                </Figure>
-            </Container2>
-            <Container2>
-                <Figure style={{display:"flex"}}>
-                    <Image
-                        src={"https://img.freepik.com/free-photo/assortment-of-vegetables-herbs-and-spices-on-black-background-top-view-copy-space_123827-21707.jpg"}
-                        style={{width: '10%', height: '100%',margin:"10px"}}
-                        roundedCircle
-                    />
-                    <Figure.Caption>
-                        <div style={{display:"flex",gap:"10px"}}>
-                            <h3>User</h3> <a style={{margin:"0 5px"}}>2023-07-01 01:36</a>
-                        </div>
-                        <a>행복하게 살고싶다~~</a>
-                    </Figure.Caption>
-                </Figure>
-            </Container2>
-            <Container2>
-                <Figure style={{display:"flex"}}>
-                    <Image
-                        src={"https://img.freepik.com/free-photo/assortment-of-vegetables-herbs-and-spices-on-black-background-top-view-copy-space_123827-21707.jpg"}
-                        style={{width: '10%', height: '100%',margin:"10px"}}
-                        roundedCircle
-                    />
-                    <Figure.Caption>
-                        <div style={{display:"flex",gap:"10px"}}>
-                            <h3>User</h3> <a style={{margin:"0 5px"}}>2023-07-01 01:36</a>
-                        </div>
-                        <a>행복하게 살고싶다~~</a>
-                    </Figure.Caption>
-                </Figure>
-            </Container2>
+            {comments.map((comment, index) => (
+                <CommentBox key={index} comment={comment.comment} recipeId={recipe.id} index={index} nickName={"UserName"}/>
+            ))}
         </Container2>
     );
 };

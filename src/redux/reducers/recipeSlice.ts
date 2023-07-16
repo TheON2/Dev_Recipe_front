@@ -1,5 +1,15 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit";
 
+interface Comment{
+    recipeId?:string;
+    commentId?:string;
+    comment?:string;
+    writerEmail?: string;
+    createdAt?: string;
+    updatedAt?: string;
+    __v?: number;
+}
+
 export interface Recipe {
     _id?: string;
     id?: string;
@@ -10,9 +20,10 @@ export interface Recipe {
     category4: string;
     ingredients: Array<string>;
     title: string;
-    content: string;
+    content: Array<string>;
     tip: string;
     url: string;
+    comment?: Comment[]|null;
     writerEmail?: string;
     createdAt?: string;
     updatedAt?: string;
@@ -45,7 +56,8 @@ const initialState: RecipesState = {
         category4: "",
         ingredients:[],
         title: "",
-        content: "",
+        content: [],
+        comment:[],
         tip: "",
         url: "",
         writerEmail: "",
@@ -86,6 +98,22 @@ const recipeSlice = createSlice({
             if (state.recipes) {
                 state.recipes = state.recipes.filter(recipe => recipe.id !== action.payload);
             }
+        },
+        ADD_COMMENT: (state: RecipesState, action: PayloadAction<{ recipeId: string, comment: Comment }>) => {
+            if (state.recipes) {
+                const recipe = state.recipes.find(r => r.id === action.payload.recipeId);
+                if (recipe) {
+                    recipe.comment = recipe.comment ? [...recipe.comment, action.payload.comment] : [action.payload.comment];
+                }
+            }
+        },
+        DELETE_COMMENT: (state: RecipesState, action: PayloadAction<{ recipeId: string, commentIndex: number }>) => {
+            if (state.recipes) {
+                const recipe = state.recipes.find(r => r.id === action.payload.recipeId);
+                if (recipe && recipe.comment) {
+                    recipe.comment.splice(action.payload.commentIndex, 1);
+                }
+            }
         }
     },
 });
@@ -94,7 +122,9 @@ export const {
     LOAD_RECIPES,
     ADD_RECIPE,
     UPDATE_RECIPE,
-    DELETE_RECIPE
+    DELETE_RECIPE,
+    ADD_COMMENT,
+    DELETE_COMMENT
 } = recipeSlice.actions;
 
 export default recipeSlice.reducer;

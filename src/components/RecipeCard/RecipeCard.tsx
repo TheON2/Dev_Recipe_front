@@ -2,10 +2,10 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import {Link} from "react-router-dom";
 
-const RecipeCard = ({imageUrl,title,subtitle,style}) => {
+const RecipeCard = ({imageUrl,title,subtitle,style,id}) => {
     return (
         <>
-            <Link to={'/Detail'}>
+            <Link to={`/${id}`}>
             <Card style={style? style : {width:"300px",height:"400px",display:"inline-block",margin:"20px"}}>
                 <Card.Img variant="top" src={imageUrl? imageUrl : "https://img.freepik.com/free-photo/assortment-of-vegetables-herbs-and-spices-on-black-background-top-view-copy-space_123827-21707.jpg"} style={{width:"300px"}} />
                 <Card.Body>

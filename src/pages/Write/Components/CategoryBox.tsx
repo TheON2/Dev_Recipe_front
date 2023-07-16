@@ -7,7 +7,7 @@ const CategoryBox = ({method1,method2,method3,method4}) => {
         <>
             <Form.Group as={Col} controlId="formGridState" className="text-start ">
                 <Form.Label>종류</Form.Label>
-                <Form.Select defaultValue="레시피 종류" style={{width: "160px"}}  onChange={method1}>
+                <Form.Select defaultValue="메인반찬" style={{width: "160px"}}  onChange={method1}>
                     <option>메인반찬</option>
                     <option>국/탕</option>
                     <option>찌개</option>
@@ -28,7 +28,7 @@ const CategoryBox = ({method1,method2,method3,method4}) => {
             </Form.Group>
             <Form.Group as={Col} controlId="formGridState" className="text-start">
                 <Form.Label>상황</Form.Label>
-                <Form.Select defaultValue="다양한 상황" style={{width: "160px"}} onChange={method2}>
+                <Form.Select defaultValue="일상" style={{width: "160px"}} onChange={method2}>
                     <option>일상</option>
                     <option>초스피드</option>
                     <option>손님접대</option>
@@ -47,7 +47,7 @@ const CategoryBox = ({method1,method2,method3,method4}) => {
             </Form.Group>
             <Form.Group as={Col} controlId="formGridState" className="text-start">
                 <Form.Label>방법</Form.Label>
-                <Form.Select defaultValue="방법별" style={{width: "160px"}} onChange={method3}>
+                <Form.Select defaultValue="볶음" style={{width: "160px"}} onChange={method3}>
                     <option>볶음</option>
                     <option>끓이기</option>
                     <option>부침</option>
@@ -66,7 +66,7 @@ const CategoryBox = ({method1,method2,method3,method4}) => {
             </Form.Group>
             <Form.Group as={Col} controlId="formGridState" className="text-start">
                 <Form.Label>재료</Form.Label>
-                <Form.Select defaultValue="재료별" style={{width: "160px"}} onChange={method4}>
+                <Form.Select defaultValue="소고기" style={{width: "160px"}} onChange={method4}>
                     <option>소고기</option>
                     <option>돼지고기</option>
                     <option>닭고기</option>
