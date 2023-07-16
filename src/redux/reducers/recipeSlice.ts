@@ -107,11 +107,11 @@ const recipeSlice = createSlice({
                 }
             }
         },
-        DELETE_COMMENT: (state: RecipesState, action: PayloadAction<{ recipeId: string, commentIndex: number }>) => {
+        DELETE_COMMENT: (state: RecipesState, action: PayloadAction<{ recipeId: string, commentId: string }>) => {
             if (state.recipes) {
                 const recipe = state.recipes.find(r => r.id === action.payload.recipeId);
                 if (recipe && recipe.comment) {
-                    recipe.comment.splice(action.payload.commentIndex, 1);
+                    recipe.comment = recipe.comment.filter(comment => comment.commentId !== action.payload.commentId);
                 }
             }
         }

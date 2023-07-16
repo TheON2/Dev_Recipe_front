@@ -1,19 +1,42 @@
-import React from 'react';
-import {Figure, Image} from "react-bootstrap";
+import React, {useState, useCallback} from 'react';
+import {Button, Figure, Image} from "react-bootstrap";
 import {Container2} from "../style";
+import {useDispatch} from "react-redux";
+import { DELETE_COMMENT } from "../../../redux/reducers/recipeSlice";
 
-const CommentBox = ({profileUrl,nickName,createdAt,comment}) => {
+const CommentBox = ({profileUrl, nickName, createdAt, comment, commentId, recipeId}) => {
+    const dispatch = useDispatch();
+    const [hovered, setHovered] = useState(false);
+    const deleteComment = useCallback(()=>{
+        const sendData = {recipeId,commentId}
+        dispatch(DELETE_COMMENT(sendData))
+    },[recipeId, commentId])
+
     return (
         <Container2>
+            <Button
+                style={{
+                    position: "absolute",
+                    top: 10,
+                    right: 10,
+                    backgroundColor:"black",
+                    opacity: hovered ? 1 : 0,
+                    transition: "opacity 0.5s"
+                }}
+                onClick={deleteComment}
+                onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+            >
+                X
+            </Button>
             <Figure style={{display:"flex"}}>
                 <Image
-                    src={"https://img.freepik.com/free-photo/assortment-of-vegetables-herbs-and-spices-on-black-background-top-view-copy-space_123827-21707.jpg"}
+                    src={profileUrl || "https://img.freepik.com/free-photo/assortment-of-vegetables-herbs-and-spices-on-black-background-top-view-copy-space_123827-21707.jpg"}
                     style={{width: '10%', height: '100%',margin:"10px"}}
                     roundedCircle
                 />
                 <Figure.Caption>
                     <div style={{display:"flex",gap:"10px"}}>
-                        <h3>{nickName ? nickName : "User"}</h3> <a style={{margin:"0 5px"}}>2023-07-01 01:36</a>
+                        <h3>{nickName ? nickName : "User"}</h3> <a style={{margin:"0 5px"}}>{createdAt || "2023-07-01 01:36"}</a>
                     </div>
                     <a style={{margin:"10px"}}>{comment? comment : "행복하게 살고싶다~~"}</a>
                 </Figure.Caption>

@@ -29,7 +29,7 @@ const DetailContainer5 = ({recipeId}) => {
                 <h3>Comment {comments.length}</h3>
             </div>
             {comments.map((comment, index) => (
-                <CommentBox key={index} comment={comment.comment} recipeId={recipe.id} index={index} nickName={"UserName"}/>
+                <CommentBox key={index} comment={comment.comment} recipeId={recipe.id} commentId={comment.commentId} nickName={"UserName"}/>
             ))}
         </Container2>
     );
