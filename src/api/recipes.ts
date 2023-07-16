@@ -1,25 +1,28 @@
 import api from "../axios/api";
 
-interface Todo {
-  title:string;
-  content:string;
-  done: boolean;
-  id: string;
-  writerEmail:string|null;
-}
+const addRecipe = async (newRecipe: FormData) => {
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  };
 
-interface SendData{
-  id:string|undefined;
-  content:string|undefined;
-}
-
-//todos
-const addTodo = async (newTodo:Todo) => {
-  await api.post(`/todos`, newTodo);
+  console.log(newRecipe)
+  await api.post(`/recipes`, newRecipe, config);
 };
 
-const getTodos = async () => {
-  const response = await api.get(`/todos`);
+const getRecipes = async () => {
+  const response = await api.get(`/recipes`);
+  return response.data;
+};
+
+const updateRecipe = async (sendData) => {
+  const response = await api.patch(`/recipes/${sendData.id}/update`, {title:sendData.title});
+  return response.data;
+};
+
+const deleteRecipe = async (recipeId:string) => {
+  const response = await api.delete(`/recipes/${recipeId}`);
   return response.data;
 };
 
@@ -48,12 +51,12 @@ const getTodosDonePaging = async (page:number) => {
   return response.data;
 };
 
-const updateDoneTodo = async (todo:Todo) => {
+const updateDoneTodo = async (todo) => {
   const response = await api.patch(`/todos/${todo.id}/done`, {done: !(todo.done)});
   return response.data;
 };
 
-const updateTodo = async (sendData:SendData) => {
+const updateTodo = async (sendData) => {
   const response = await api.patch(`/todos/${sendData.id}/content`, {content: sendData.content});
   return response.data;
 };
@@ -64,4 +67,4 @@ const deleteTodo = async (todoId:string) => {
 };
 
 
-export {getTodos,getTodo, addTodo, updateTodo, updateDoneTodo, deleteTodo ,getTodosDone ,getTodosWorking ,getTodosWorkingPaging ,getTodosDonePaging};
+export {addRecipe,updateRecipe,deleteRecipe,getRecipes};

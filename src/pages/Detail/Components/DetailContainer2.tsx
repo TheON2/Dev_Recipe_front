@@ -3,6 +3,7 @@ import {Container2} from "../style";
 import {Image} from "react-bootstrap"
 
 const DetailContainer2 = ({material}) => {
+    const splitMaterial = material.split("^.^")
     return (
         <Container2
             id="maincontent"
@@ -15,7 +16,7 @@ const DetailContainer2 = ({material}) => {
         >
             <div style={{margin:"30px"}}>
                 <h2>[재료]</h2>
-                {material?.map((item, index) => (
+                {splitMaterial?.map((item, index) => (
                     <h4 style={{textAlign:"center"}} key={index}>{item}</h4>
                 ))}
             </div>

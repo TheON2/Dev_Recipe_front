@@ -1,10 +1,22 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit";
 
-interface Comment{
-    recipeId?:string;
-    commentId?:string;
-    comment?:string;
+interface Comment {
+    _id?: string;
+    id?: string;
+    recipeId?: string;
+    content?: string;
     writerEmail?: string;
+    createdAt?: string;
+    updatedAt?: string;
+    __v?: number;
+}
+
+interface Content {
+    _id?: string;
+    id?: string;
+    recipeId?: string;
+    content?: string;
+    url?: string;
     createdAt?: string;
     updatedAt?: string;
     __v?: number;
@@ -14,16 +26,13 @@ export interface Recipe {
     _id?: string;
     id?: string;
     subtitle: string;
-    category1: string;
-    category2: string;
-    category3: string;
-    category4: string;
-    ingredients: Array<string>;
+    category: string;
+    ingredients: string;
     title: string;
-    content: Array<string>;
+    content: Content[] | null;
     tip: string;
     url: string;
-    comment?: Comment[]|null;
+    comment?: Comment[] | null;
     writerEmail?: string;
     createdAt?: string;
     updatedAt?: string;
@@ -50,14 +59,11 @@ const initialState: RecipesState = {
         _id: "",
         id: "",
         subtitle: "",
-        category1: "",
-        category2: "",
-        category3: "",
-        category4: "",
-        ingredients:[],
+        category: "",
+        ingredients: "",
         title: "",
         content: [],
-        comment:[],
+        comment: [],
         tip: "",
         url: "",
         writerEmail: "",
@@ -111,7 +117,7 @@ const recipeSlice = createSlice({
             if (state.recipes) {
                 const recipe = state.recipes.find(r => r.id === action.payload.recipeId);
                 if (recipe && recipe.comment) {
-                    recipe.comment = recipe.comment.filter(comment => comment.commentId !== action.payload.commentId);
+                    recipe.comment = recipe.comment.filter(comment => comment.id !== action.payload.commentId);
                 }
             }
         }

@@ -18,11 +18,12 @@ const Detail = () => {
     if (recipes) {
         recipe = recipes.find((recipe)=>recipe.id===params.id)
     }
+    const splitCategories = recipe.category.split("^.^");
 
     return (
         <>
             <DetailContainer1 title={recipe.title} subtitle={recipe.subtitle} nickName={"testUser"}
-            c1={recipe.category1} c2={recipe.category2} c3={recipe.category3} c4={recipe.category4}
+            c1={splitCategories[0]} c2={splitCategories[1]} c3={splitCategories[2]} c4={splitCategories[3]}
             />
             <DetailContainer2 material={recipe.ingredients}/>
             {recipe.contentArr?.map((step,idx)=>
