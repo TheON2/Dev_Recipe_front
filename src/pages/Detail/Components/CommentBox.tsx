@@ -3,14 +3,31 @@ import {Button, Figure, Image} from "react-bootstrap";
 import {Container2} from "../style";
 import {useDispatch} from "react-redux";
 import { DELETE_COMMENT } from "../../../redux/reducers/recipeSlice";
+import {useMutation, useQueryClient} from "react-query";
+import {addComment, deleteComment} from "../../../api/recipes";
 
 const CommentBox = ({profileUrl, nickName, createdAt, comment, commentId, recipeId}) => {
     const dispatch = useDispatch();
     const [hovered, setHovered] = useState(false);
-    const deleteComment = useCallback(()=>{
-        const sendData = {recipeId,commentId}
-        dispatch(DELETE_COMMENT(sendData))
-    },[recipeId, commentId])
+    const queryClient = useQueryClient();
+    const mutation = useMutation(deleteComment, {
+        onMutate: async (commentId) => {
+            const oldData = queryClient.getQueryData(["comment", recipeId]);
+            queryClient.setQueryData(["comment", recipeId], (oldComments) =>
+                oldComments.filter((comment) => comment.id !== commentId)
+            );
+            return oldData;
+        },
+        onError: (err, variables, oldData) =>
+            queryClient.setQueryData(["comment", recipeId], oldData),
+        onSettled: () => {
+            queryClient.invalidateQueries(["comment", recipeId]);
+        },
+    });
+
+    const onDeleteComment = useCallback(() => {
+        mutation.mutate(commentId);
+    }, [recipeId, commentId]);
 
     return (
         <Container2>
@@ -23,7 +40,7 @@ const CommentBox = ({profileUrl, nickName, createdAt, comment, commentId, recipe
                     opacity: hovered ? 1 : 0,
                     transition: "opacity 0.5s"
                 }}
-                onClick={deleteComment}
+                onClick={onDeleteComment}
                 onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
             >
                 X

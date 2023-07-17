@@ -89,6 +89,9 @@ const recipeSlice = createSlice({
         LOAD_RECIPES: (state: RecipesState, action: PayloadAction<Recipe[]>) => {
             state.recipes = action.payload;
         },
+        LOAD_RECIPE: (state: RecipesState, action: PayloadAction<Recipe>) => {
+            state.recipe = action.payload;
+        },
         ADD_RECIPE: (state: RecipesState, action: PayloadAction<Recipe>) => {
             state.recipes?.push(action.payload);
         },

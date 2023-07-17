@@ -5,26 +5,26 @@ import {useMutation} from "react-query";
 import {deleteRecipe, updateRecipe} from "../../api/recipes";
 
 const RecipeCard = ({imageUrl,title,subtitle,style,id}) => {
-    const mutationUpdate = useMutation(updateRecipe, {
-        onSuccess: () => {
-            alert('Update Successful!');
-        },
-    });
+    // const mutationUpdate = useMutation(updateRecipe, {
+    //     onSuccess: () => {
+    //         alert('Update Successful!');
+    //     },
+    // });
+    //
+    // const mutationDelete = useMutation(deleteRecipe, {
+    //     onSuccess: () => {
+    //         alert('Delete Successful!');
+    //     },
+    // });
 
-    const mutationDelete = useMutation(deleteRecipe, {
-        onSuccess: () => {
-            alert('Delete Successful!');
-        },
-    });
-
-    const handleUpdate = () => {
-        console.log(id)
-        mutationUpdate.mutate({ id: id,title:"바뀐이름" });
-    };
-
-    const handleDelete = () => {
-        mutationDelete.mutate(id);
-    };
+    // const handleUpdate = () => {
+    //     console.log(id)
+    //     mutationUpdate.mutate({ id: id,title:"바뀐이름" });
+    // };
+    //
+    // const handleDelete = () => {
+    //     mutationDelete.mutate(id);
+    // };
     return (
         <>
             <Link to={`/${id}`}>
@@ -38,8 +38,6 @@ const RecipeCard = ({imageUrl,title,subtitle,style,id}) => {
                 </Card.Body>
             </Card>
             </Link>
-            <button onClick={handleUpdate}>Update Recipe</button>
-            <button onClick={handleDelete}>Delete Recipe</button>
         </>
     );
 };

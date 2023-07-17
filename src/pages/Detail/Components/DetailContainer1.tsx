@@ -1,11 +1,37 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {Container2} from "../style";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import {Badge, Image} from "react-bootstrap"
+import {Badge, Button, Image} from "react-bootstrap"
+import {useMutation, useQueryClient} from "react-query";
+import {deleteComment, deleteRecipe} from "../../../api/recipes";
+import {useNavigate} from "react-router-dom";
 
-const DetailContainer1 = ({imageUrl, nickName, userProfileUrl, title, subtitle,c1,c2,c3,c4}) => {
+const DetailContainer1 = ({imageUrl, nickName, userProfileUrl, title, subtitle,c1,c2,c3,c4,setUpdate,recipeId}) => {
+    const [isHovered, setIsHovered] = useState(false);
+    const navigate = useNavigate()
+    const queryClient = useQueryClient();
+
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
+
+    const mutation = useMutation(deleteRecipe, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['recipes', recipeId]);
+            alert('삭제되었습니다.')
+            navigate('/')
+        },
+    });
+
+    const handleDelete = () => {
+        mutation.mutate(recipeId);
+    };
     return (
         <Container2
             id="maincontent"
@@ -15,7 +41,18 @@ const DetailContainer1 = ({imageUrl, nickName, userProfileUrl, title, subtitle,c
                 margin: "20px",
                 padding: "20px"
             }}
+            onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
         >
+            <div style={{
+                position: 'absolute',
+                top: '10px',
+                right: '10px',
+                opacity: isHovered ? '1' : '0',
+                transition: 'opacity 0.3s'
+            }}>
+                <Button variant="outline-secondary" onClick={()=>{setUpdate(true)}} style={{marginRight: '5px'}}>Edit</Button>
+                <Button variant="outline-danger" onClick={handleDelete}>Delete</Button>
+            </div>
             <div style={{display:"flex", gap:"10px", margin:"10px", flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
                 <h1><Badge bg="secondary">{c1}</Badge></h1>
                 <h1><Badge bg="secondary">{c2}</Badge></h1>

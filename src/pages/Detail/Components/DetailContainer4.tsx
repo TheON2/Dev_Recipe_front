@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import {Image} from "react-bootstrap"
 
-const DetailContainer4 = ({nickName,imageUrl}) => {
+const DetailContainer4 = ({nickName,imageUrl,profileContent}) => {
     return (
         <Container2
             id="maincontent"
@@ -26,7 +26,7 @@ const DetailContainer4 = ({nickName,imageUrl}) => {
             />
             <div>
                 <h3 >{nickName ? nickName : "CookingMaster"}</h3>
-                <a>열심히 삽니다</a>
+                <a>{profileContent? profileContent : "열심히 삽니다"}</a>
             </div>
         </div>
         </Container2>

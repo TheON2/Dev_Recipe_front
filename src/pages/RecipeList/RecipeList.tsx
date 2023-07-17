@@ -15,9 +15,6 @@ const RecipeList = () => {
      if (error) return <div>An error has occurred: {error.message}</div>;
     return (
         <>
-            <RecipeCard title={"맛있는 요리"} subtitle={"맛있겠죠?"}/>
-            <RecipeCard title={"맛있는 요리"} subtitle={"맛있겠죠?"}/>
-            <RecipeCard title={"맛있는 요리"} subtitle={"맛있겠죠?"}/>
                 {recipes?.map((recipe) =>
                     <RecipeCard id={recipe.id} key={recipe.title} title={recipe.title} subtitle={recipe.subtitle}/>
                 )}

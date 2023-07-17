@@ -2,8 +2,6 @@ import React from 'react';
 import Form from "react-bootstrap/Form";
 
 const UploadImageBox = ({preview,onFileChange}) => {
-
-
     return (
         <>
             <Form.Group controlId="formFileSm" className="mb-3" style={{width:"35%",marginTop:"20px"}}>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import useInput from "../../hooks/useInput";
 import useArrayInput from "../../hooks/useArrayInput";
@@ -11,34 +11,62 @@ import {useDispatch, useSelector} from "react-redux";
 import {ADD_RECIPE} from "../../redux/reducers/recipeSlice";
 import {v4 as uuidv4} from 'uuid'
 import {useMutation, useQueryClient} from "react-query";
-import {addRecipe} from "../../api/recipes";
+import {addRecipe, updateRecipe} from "../../api/recipes";
 import {UserState} from "../../redux/reducers/userSlice";
 import {RootState} from "../../type/local";
 
-const Write = () => {
+const Update = ({recipe,content,user,update,setUpdate}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { user }: { user: UserState["user"] } = useSelector(
-        (state: RootState) => state.user
-    );
-    const [title, onChangeTitle] = useInput<string | undefined>("");
-    const [subtitle, onChangeSubtitle] = useInput<string | undefined>("");
-    const [url, onChangeUrl] = useInput<string | undefined>("");
-    const [category1, onChangeCategory1] = useInput<string | undefined>("메인반찬");
-    const [category2, onChangeCategory2] = useInput<string | undefined>("일상");
-    const [category3, onChangeCategory3] = useInput<string | undefined>("볶음");
-    const [category4, onChangeCategory4] = useInput<string | undefined>("소고기");
+    const [title, onChangeTitle,setTitle] = useInput<string | undefined>("");
+    const [subtitle, onChangeSubtitle,setSubtitle] = useInput<string | undefined>("");
+    const [url, onChangeUrl,setUrl] = useInput<string | undefined>("");
+    const [category1, onChangeCategory1,setCategory1] = useInput<string | undefined>("메인반찬");
+    const [category2, onChangeCategory2,setCategory2] = useInput<string | undefined>("일상");
+    const [category3, onChangeCategory3,setCategory3] = useInput<string | undefined>("볶음");
+    const [category4, onChangeCategory4,setCategory4] = useInput<string | undefined>("소고기");
     const [ingredients, onChangeIngredients, setIngredients, addIngredients, deleteIngredients, delIdxIngredients] = useArrayInput(["",], 12);
     const [contentArr, onChangeContentArr, setContentArr, addContentArr, deleteContentArr, delIdxContentArr] = useArrayInput(["",], 10);
-    const [tip, onChangeTip] = useInput<string | undefined>("");
+    const [tip, onChangeTip,setTip] = useInput<string | undefined>("");
     const [file, setFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string>(null);
 
+
+    useEffect(() => {
+        if (update) {
+            const category = recipe.category.split("^.^")
+            console.log(recipe, content, user);
+            setTitle(recipe.title);
+            setSubtitle(recipe.subtitle);
+            setUrl(recipe.url);
+            setTip(recipe.tip);
+            setCategory1(category[0]);
+            setCategory2(category[1])
+            setCategory3(category[2])
+            setCategory4(category[3])
+            const splitMaterial = recipe.ingredient.split("^.^")
+            for(let i = 0; i < splitMaterial.length; i++) {
+                addIngredients();
+            }
+            setIngredients([...splitMaterial]);
+            for(let i = 0; i < content.length; i++) {
+                addContentArr();
+            }
+            setContentArr(content.map(item => item.content));
+        }
+    },[update])
+
+    useEffect(()=>{
+        console.log(contentArr)
+    },[contentArr])
+
+
     const queryClient = useQueryClient();
     const {mutate: addRecipe_Mutate, isLoading: addRecipeLoading} =
-        useMutation(addRecipe, {
+        useMutation(updateRecipe, {
             onSuccess: (data) => {
                 queryClient.invalidateQueries("recipes");
+                setUpdate(false);
             },
         });
 
@@ -59,14 +87,9 @@ const Write = () => {
         formData.append('url', url || '');
         formData.append('content', JSON.stringify(contentArr));
         formData.append('writerEmail', user.email || "");
-        addRecipe_Mutate(formData)
+        addRecipe_Mutate({recipeId:recipe.id,formData})
 
-        const newRecipe = {
-            id: uuidv4(), title, subtitle, joinedCategories, contentArr, tip, url, ingre, comment: []
-        }
-        dispatch(ADD_RECIPE(newRecipe))
         alert("성공적으로 등록 되었습니다!")
-        navigate("/")
     };
 
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,6 +103,8 @@ const Write = () => {
             reader.readAsDataURL(selectedFile);
         }
     };
+
+
     return (
         <>
             <div>
@@ -89,7 +114,8 @@ const Write = () => {
                 <WriteContainer1 preview={preview} onFileChange={onFileChange} onChangeCategory1={onChangeCategory1}
                                  onChangeCategory2={onChangeCategory2} onChangeCategory3={onChangeCategory3}
                                  onChangeCategory4={onChangeCategory4} onChangeSubtitle={onChangeSubtitle}
-                                 onChangeTitle={onChangeTitle} onChangeUrl={onChangeUrl}/>
+                                 onChangeTitle={onChangeTitle} onChangeUrl={onChangeUrl} title={title} subtitle={subtitle}
+                                 url={url} category1={category1} category2={category2} category3={category3} category4={category4}/>
                 <WriteContainer2 ingredients={ingredients} onChangeIngredients={onChangeIngredients}
                                  addIngredients={addIngredients} deleteIngredients={deleteIngredients}
                                  delIdxIngredients={delIdxIngredients}
@@ -97,10 +123,10 @@ const Write = () => {
                 <WriteContainer3 onChangeContentArr={onChangeContentArr} addContentArr={addContentArr}
                                  contentArr={contentArr} deleteContentArr={deleteContentArr}
                                  delIdxContentArr={delIdxContentArr}/>
-                <WriteContainer4 onChangeTip={onChangeTip}/>
+                <WriteContainer4 onChangeTip={onChangeTip} tip={tip}/>
             </Form>
         </>
     );
 };
 
-export default Write;
+export default Update;

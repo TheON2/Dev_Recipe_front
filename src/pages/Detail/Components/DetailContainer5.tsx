@@ -8,10 +8,7 @@ import CommentBox from "./CommentBox";
 import {RootState} from "../../../type/local";
 import {useSelector} from "react-redux";
 
-const DetailContainer5 = ({recipeId}) => {
-    const { recipes } = useSelector((state: RootState) => state.recipes);
-    const recipe = recipes?.find((recipe) => recipe.id === recipeId);
-    const comments = recipe?.comment || [];
+const DetailContainer5 = ({comments,recipeId}) => {
 
     return (
         <Container2
@@ -29,7 +26,7 @@ const DetailContainer5 = ({recipeId}) => {
                 <h3>Comment {comments.length}</h3>
             </div>
             {comments.map((comment, index) => (
-                <CommentBox key={index} comment={comment.comment} recipeId={recipe.id} commentId={comment.commentId} nickName={"UserName"}/>
+                <CommentBox key={index} comment={comment.content} recipeId={recipeId} commentId={comment.id} nickName={comment.writerEmail}/>
             ))}
         </Container2>
     );
