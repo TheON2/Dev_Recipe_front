@@ -1,10 +1,14 @@
 {
   "compilerOptions": {
-    "composite": true,
-    "skipLibCheck": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true
+    "target": "es2020",
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "module": "es2020",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "moduleResolution": "node",
+    "noEmitOnError": false,
   },
   "include": ["vite.config.ts"]
 }
