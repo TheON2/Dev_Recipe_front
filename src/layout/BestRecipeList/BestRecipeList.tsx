@@ -2,60 +2,37 @@ import React from 'react';
 import {Carousel} from "react-bootstrap";
 import {LayOut} from "./style";
 import RecipeCard from "../../components/RecipeCard/RecipeCard";
+import {useSelector} from "react-redux";
 
 const BestRecipeList = () => {
+    const {user} = useSelector(state => state.user);
     return (
-        <LayOut
-        >
-            <h3>코딩너무재밌어`s BEST Recipe</h3>
+        <>
+            <h1>{user.email}`s BEST Recipe</h1>
             <Carousel>
                 <Carousel.Item>
-                    <div style={{display:"flex"}}>
-                        <div style={{width: "33.33%"}}>
-                            <RecipeCard />
-                        </div>
-                        <div style={{width: "33.33%"}}>
-                            <RecipeCard />
-                        </div>
-                        <div style={{width: "33.33%"}}>
-                            <RecipeCard />
-                        </div>
-                    </div>
+                    <RecipeCard/>
+                    <RecipeCard/>
+                    <RecipeCard/>
                     <Carousel.Caption>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <div style={{display:"flex"}}>
-                        <div style={{width: "33.33%"}}>
-                            <RecipeCard />
-                        </div>
-                        <div style={{width: "33.33%"}}>
-                            <RecipeCard />
-                        </div>
-                        <div style={{width: "33.33%"}}>
-                            <RecipeCard />
-                        </div>
-                    </div>
+                    <RecipeCard/>
+                    <RecipeCard/>
+                    <RecipeCard/>
                     <Carousel.Caption>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <div style={{display:"flex"}}>
-                        <div style={{width: "33.33%"}}>
-                            <RecipeCard />
-                        </div>
-                        <div style={{width: "33.33%"}}>
-                            <RecipeCard />
-                        </div>
-                        <div style={{width: "33.33%"}}>
-                            <RecipeCard />
-                        </div>
-                    </div>
+                    <RecipeCard/>
+                    <RecipeCard/>
+                    <RecipeCard/>
                     <Carousel.Caption>
                     </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>
-        </LayOut>
+        </>
     );
 };
 

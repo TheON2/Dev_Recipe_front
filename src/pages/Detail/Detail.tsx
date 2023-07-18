@@ -60,7 +60,7 @@ const Detail = () => {
     return (isSuccess && contentSuccess && commentSuccess && !load &&
       <>
           {!update ? (
-              <>
+              <div style={{textAlign:"left"}}>
                   <DetailContainer1 title={recipe.title} subtitle={recipe.subtitle} nickName={user.email}
                                     c1={splitCategories[0]} c2={splitCategories[1]} c3={splitCategories[2]}
                                     c4={splitCategories[3]} userProfileUrl={user.imageUrl} setUpdate={setUpdate}
@@ -74,7 +74,7 @@ const Detail = () => {
                                     profileContent={user.profileContent}/>
                   <DetailContainer5 comments={commentArr} recipeId={recipe.id} user={user}/>
                   <DetailContainer6 recipeId={recipe.id}/>
-              </>
+              </div>
           ) : <Update user={user} content={contentArr} recipe={recipe} update={update} setUpdate={setUpdate}/>}
       </>
     );

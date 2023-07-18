@@ -121,7 +121,7 @@ const Write = () => {
             <div>
                 <h2>레시피 등록</h2>
             </div>
-            <Form onSubmit={onSubmit}>
+            <Form onSubmit={onSubmit} style={{textAlign:"left"}}>
                 <WriteContainer1 preview={preview} onFileChange={onFileChange} onChangeCategory1={onChangeCategory1}
                                  onChangeCategory2={onChangeCategory2} onChangeCategory3={onChangeCategory3}
                                  onChangeCategory4={onChangeCategory4} onChangeSubtitle={onChangeSubtitle}

@@ -18,7 +18,7 @@ const RecentCard = ({imageUrl, title, nickName, style, cardNumber,id}) => {
                 zIndex: 1,
                 border:"1px solid gray"
             }}>
-                <h4>{cardNumber? cardNumber : 1}</h4>
+                <h4>{cardNumber}</h4>
             </div>
             <Card style={style ? style : {width: "180px", height: "300px", margin: "10px", position: "relative"}}>
                 <Card.Img variant="top" src={imageUrl ? imageUrl : "https://img.freepik.com/free-photo/assortment-of-vegetables-herbs-and-spices-on-black-background-top-view-copy-space_123827-21707.jpg"} style={{height:"200px"}} />
