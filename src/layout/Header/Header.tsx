@@ -85,7 +85,7 @@ const Header = () => {
         >
           MYPAGE
         </Link>
-        {!user ? (
+        {!user.email ? (
           <Link
             style={{ margin: "auto", fontWeight: "bold", padding: "10px" }}
             to="/Login"
