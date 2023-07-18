@@ -6,11 +6,9 @@
     "module": "es2020",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": false,
-    "moduleResolution": "node",
-    "noEmitOnError": false,
+    "strict": true,
+    "moduleResolution": "node"
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
-
