@@ -8,16 +8,21 @@ const addRecipe = async (newRecipe: FormData) => {
   };
 
   console.log(newRecipe)
-  await api.post(`/recipes`, newRecipe, config);
+  await api.post(`/api/recipe`, newRecipe, config);
+};
+
+const getTestRecipes = async () => {
+  const response = await api.get(`/api/recipe`);
+  return response.data;
 };
 
 const getRecipes = async () => {
-  const response = await api.get(`/recipes`);
+  const response = await api.get(`/api/recipe`);
   return response.data;
 };
 
 const getRecipe = async (recipeId) => {
-  const response = await api.get(`/recipes/recipe/${recipeId}`);
+  const response = await api.get(`/api/recipe/${recipeId}`);
   return response.data;
 };
 
@@ -29,77 +34,41 @@ const updateRecipe = async (sendData) => {
     }
   };
 
-  await api.patch(`/recipes/${sendData.recipeId}`, sendData.formData, config);
+  await api.put(`/api/recipe/${sendData.recipeId}`, sendData.formData, config);
 };
 
 const deleteRecipe = async (recipeId:string) => {
-  const response = await api.delete(`/recipes/${recipeId}`);
+  const response = await api.delete(`/api/recipe/${recipeId}`);
   return response.data;
 };
 
 const getContents = async (recipeId) => {
-  const response = await api.get(`/recipes/contents/${recipeId}`);
+  const response = await api.get(`/api/recipe/contents/${recipeId}`);
   return response.data;
 };
 
 const getComments = async (recipeId) => {
-  const response = await api.get(`/recipes/comments/${recipeId}`);
+  const response = await api.get(`/api/recipe/comments/${recipeId}`);
   return response.data;
 };
 
 const addComment = async (sendData) => {
-  const response = await api.post(`/recipes/comment`, sendData);
+  const response = await api.post(`/api/recipe/comment`, sendData);
 }
 
 const getComment = async (recipeId) => {
-  const response = await api.get(`/recipes/recipe/${recipeId}`);
+  const response = await api.get(`/api/recipe/recipe/${recipeId}`);
   return response.data;
 };
 
 const deleteComment = async (commentId) => {
-  const response = await api.delete(`/recipes/comment/${commentId}`);
+  const response = await api.delete(`/api/recipe/comment/${commentId}`);
   return response.data;
 };
 
-const getTodo = async (todoId:string) => {
-  const response = await api.get(`/todos/todo/${todoId}`);
+const likeRecipe = async (recipe_id) => {
+  const response = await api.post(`/api/recipe/like`,recipe_id);
   return response.data;
 };
 
-const getTodosWorking = async (page:number) => {
-  const response = await api.post(`/todos/working/infinite`, {page:page});
-  return response.data;
-};
-
-const getTodosDone = async(page:number) => {
-  const response = await api.post(`/todos/done/infinite`,{page:page});
-  return response.data;
-};
-
-const getTodosWorkingPaging = async (page:number) => {
-  const response = await api.post(`/todos/working/pagination`, {page:page});
-  return response.data;
-};
-
-const getTodosDonePaging = async (page:number) => {
-  const response = await api.post(`/todos/done/pagination`,{page:page});
-  return response.data;
-};
-
-const updateDoneTodo = async (todo) => {
-  const response = await api.patch(`/todos/${todo.id}/done`, {done: !(todo.done)});
-  return response.data;
-};
-
-const updateTodo = async (sendData) => {
-  const response = await api.patch(`/todos/${sendData.id}/content`, {content: sendData.content});
-  return response.data;
-};
-
-const deleteTodo = async (todoId:string) => {
-  const response = await api.delete(`/todos/${todoId}`);
-  return response.data;
-};
-
-
-export {addRecipe,updateRecipe,deleteRecipe,getRecipes,getRecipe,getComment,getComments,deleteComment,getContents,addComment};
+export {getTestRecipes,addRecipe,updateRecipe,deleteRecipe,getRecipes,getRecipe,getComment,getComments,deleteComment,getContents,addComment,likeRecipe};

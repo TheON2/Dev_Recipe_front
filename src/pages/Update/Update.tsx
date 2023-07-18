@@ -14,6 +14,7 @@ import {useMutation, useQueryClient} from "react-query";
 import {addRecipe, updateRecipe} from "../../api/recipes";
 import {UserState} from "../../redux/reducers/userSlice";
 import {RootState} from "../../type/local";
+import Swal from "sweetalert2";
 
 const Update = ({recipe,content,user,update,setUpdate}) => {
     const navigate = useNavigate()
@@ -30,7 +31,6 @@ const Update = ({recipe,content,user,update,setUpdate}) => {
     const [tip, onChangeTip,setTip] = useInput<string | undefined>("");
     const [file, setFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string>(null);
-
 
     useEffect(() => {
         if (update) {
@@ -65,13 +65,49 @@ const Update = ({recipe,content,user,update,setUpdate}) => {
     const {mutate: addRecipe_Mutate, isLoading: addRecipeLoading} =
         useMutation(updateRecipe, {
             onSuccess: (data) => {
-                queryClient.invalidateQueries("recipes");
+                queryClient.invalidateQueries("recipe");
+                queryClient.invalidateQueries("content");
                 setUpdate(false);
             },
         });
 
     const onSubmit = (e) => {
         e.preventDefault();
+        if (title.length < 5) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '레시피 제목을 5자 이상으로 입력하세요!',
+            });
+            return;
+        }
+
+        if (subtitle.length < 10) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '레시피 설명을 10자 이상으로 입력하세요!',
+            });
+            return;
+        }
+
+        if (ingredients.length < 1 || ingredients[0] === "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '최소 한개 이상의 재료를 입력하세요!',
+            });
+            return;
+        }
+
+        if (contentArr.length < 1 || contentArr[0] === "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '설명도 없이 어떻게 조리하는데!',
+            });
+            return;
+        }
         const formData = new FormData();
         const ingre = ingredients.join('^.^')
         const categories = [category1, category2, category3, category4];
@@ -89,7 +125,11 @@ const Update = ({recipe,content,user,update,setUpdate}) => {
         formData.append('writerEmail', user.email || "");
         addRecipe_Mutate({recipeId:recipe.id,formData})
 
-        alert("성공적으로 등록 되었습니다!")
+        Swal.fire(
+            'Success!',
+            '성공적으로 수정 되었습니다!',
+            'success'
+        )
     };
 
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -8,7 +8,7 @@ import CommentBox from "./CommentBox";
 import {RootState} from "../../../type/local";
 import {useSelector} from "react-redux";
 
-const DetailContainer5 = ({comments,recipeId}) => {
+const DetailContainer5 = ({comments, recipeId, user}) => {
 
     return (
         <Container2
@@ -18,15 +18,16 @@ const DetailContainer5 = ({comments,recipeId}) => {
                 backgroundColor: "white",
                 margin: "20px",
                 padding: "20px",
-                height:"400px",
-                overflow:"auto"
+                height: "400px",
+                overflow: "auto"
             }}
         >
-            <div style={{margin:"0",padding:"0"}}>
+            <div style={{margin: "0", padding: "0"}}>
                 <h3>Comment {comments.length}</h3>
             </div>
             {comments.map((comment, index) => (
-                <CommentBox key={index} comment={comment.content} recipeId={recipeId} commentId={comment.id} nickName={comment.writerEmail}/>
+                <CommentBox key={index} comment={comment.content} recipeId={recipeId} commentId={comment.id}
+                            nickName={comment.user_id} userEmail={user.email} createdAt={comment.updatedAt}/>
             ))}
         </Container2>
     );

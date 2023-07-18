@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DetailContainer1 from "./Components/DetailContainer1";
 import DetailContainer2 from "./Components/DetailContainer2";
 import DetailContainer3 from "./Components/DetailContainer3";
@@ -28,8 +28,8 @@ const Detail = () => {
     const {isError, data, isSuccess,}
         = useQuery(["recipe", params.id], () => getRecipe(params.id), {
         onSuccess: (data) => {
-            setRecipe(data[0]);
-            setSplitCategories(data[0].category.split("^.^"));
+            setRecipe(data);
+            setSplitCategories(data.category.split("^.^"));
         },
     });
     const {isError: contentError, data: contentArr, isSuccess: contentSuccess,}
@@ -40,9 +40,14 @@ const Detail = () => {
     const {isError: commentError, data: commentArr, isSuccess: commentSuccess,}
         = useQuery(["comment", params.id], () => getComments(params.id), {
         onSuccess: (data) => {
-            setLoad(false);
         },
     });
+
+    useEffect(() => {
+        if (isSuccess && contentSuccess && commentSuccess) {
+            setLoad(false);
+        }
+    }, [isSuccess, contentSuccess, commentSuccess]);
 
     if (isError) {
         return <div>Error occurred</div>;
@@ -52,14 +57,14 @@ const Detail = () => {
         return <div>Loading...</div>;
     }
 
-    return (isSuccess && !load &&
+    return (isSuccess && contentSuccess && commentSuccess && !load &&
       <>
           {!update ? (
               <>
-                  <DetailContainer1 title={recipe.title} subtitle={recipe.subtitle} nickName={user.nickName}
+                  <DetailContainer1 title={recipe.title} subtitle={recipe.subtitle} nickName={user.email}
                                     c1={splitCategories[0]} c2={splitCategories[1]} c3={splitCategories[2]}
                                     c4={splitCategories[3]} userProfileUrl={user.imageUrl} setUpdate={setUpdate}
-                                    recipeId={params.id}/>
+                                    recipeId={params.id} userLiked={recipe.userLiked} userId={recipe.user_id}/>
 
                   <DetailContainer2 material={recipe.ingredient}/>
                   {contentArr?.map((step, idx) =>
@@ -67,7 +72,7 @@ const Detail = () => {
                   )}
                   <DetailContainer4 nickName={user.nickName} imageUrl={user.imageUrl}
                                     profileContent={user.profileContent}/>
-                  <DetailContainer5 comments={commentArr} recipeId={recipe.id}/>
+                  <DetailContainer5 comments={commentArr} recipeId={recipe.id} user={user}/>
                   <DetailContainer6 recipeId={recipe.id}/>
               </>
           ) : <Update user={user} content={contentArr} recipe={recipe} update={update} setUpdate={setUpdate}/>}

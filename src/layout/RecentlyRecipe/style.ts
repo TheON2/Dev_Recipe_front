@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container2 = styled.div`
   min-height: 800px;
-  backgroundColor: white;
+  background-color: white;
   margin: 20px;
   padding: 20px;
   background-color: #fff;
@@ -10,4 +10,10 @@ export const Container2 = styled.div`
   box-shadow:
           0 14px 28px rgba(0, 0, 0, 0.25),
           0 10px 10px rgba(0, 0, 0, 0.22);
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
+  align-items: center;
+  max-width: 100%;
 `;

@@ -2,9 +2,9 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import {Link} from "react-router-dom";
 
-const RecentCard = ({imageUrl, title, nickName, style, cardNumber}) => {
+const RecentCard = ({imageUrl, title, nickName, style, cardNumber,id}) => {
     return (
-        <Link to={'/Detail'} style={{ position: "relative", display: "inline-block" }}>
+        <Link to={`/${id}`} style={{ position: "relative", display: "inline-block" }}>
             <div style={{
                 position: "absolute",
                 top: "10px",

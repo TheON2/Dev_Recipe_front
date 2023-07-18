@@ -1,12 +1,12 @@
 import React, {useState, useCallback} from 'react';
 import {Button, Figure, Image} from "react-bootstrap";
 import {Container2} from "../style";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { DELETE_COMMENT } from "../../../redux/reducers/recipeSlice";
 import {useMutation, useQueryClient} from "react-query";
 import {addComment, deleteComment} from "../../../api/recipes";
 
-const CommentBox = ({profileUrl, nickName, createdAt, comment, commentId, recipeId}) => {
+const CommentBox = ({profileUrl, nickName,userEmail, createdAt, comment, commentId, recipeId}) => {
     const dispatch = useDispatch();
     const [hovered, setHovered] = useState(false);
     const queryClient = useQueryClient();
@@ -29,6 +29,10 @@ const CommentBox = ({profileUrl, nickName, createdAt, comment, commentId, recipe
         mutation.mutate(commentId);
     }, [recipeId, commentId]);
 
+    const date = new Date(createdAt);
+    const dateString = date.toLocaleDateString();
+    const timeString = date.toLocaleTimeString();
+
     return (
         <Container2>
             <Button
@@ -37,8 +41,9 @@ const CommentBox = ({profileUrl, nickName, createdAt, comment, commentId, recipe
                     top: 10,
                     right: 10,
                     backgroundColor:"black",
-                    opacity: hovered ? 1 : 0,
-                    transition: "opacity 0.5s"
+                    opacity: (hovered && userEmail === nickName) ? 1 : 0,
+                    transition: "opacity 0.5s",
+                    pointerEvents: (userEmail === nickName) ? 'auto' : 'none'
                 }}
                 onClick={onDeleteComment}
                 onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
@@ -53,7 +58,10 @@ const CommentBox = ({profileUrl, nickName, createdAt, comment, commentId, recipe
                 />
                 <Figure.Caption>
                     <div style={{display:"flex",gap:"10px"}}>
-                        <h3>{nickName ? nickName : "User"}</h3> <a style={{margin:"0 5px"}}>{createdAt || "2023-07-01 01:36"}</a>
+                        <h3>{nickName ? nickName : "User"}</h3>
+                        <a style={{margin:"0 5px"}}>
+                            {dateString} {timeString}
+                        </a>
                     </div>
                     <a style={{margin:"10px"}}>{comment? comment : "행복하게 살고싶다~~"}</a>
                 </Figure.Caption>
