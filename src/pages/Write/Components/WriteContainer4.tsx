@@ -1,10 +1,10 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { Container2 } from "../style";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 interface WriteContainer4Props {
-  onChangeTip: () => void;
+  onChangeTip: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const WriteContainer4: React.FC<WriteContainer4Props> = ({ onChangeTip }) => {

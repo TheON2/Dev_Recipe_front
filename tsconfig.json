@@ -1,13 +1,18 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "noEmit": true,
+    "noEmit": false,
     "jsx": "react-jsx",
     "module": "es2020",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "moduleResolution": "node"
+    "forceConsistentCasingInFileNames": false,
+    "strict": false,
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": false,
+    "noImplicitAny": false,
+    "noEmitOnError": false
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

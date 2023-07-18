@@ -12,14 +12,14 @@ export const TextArea = styled.textarea`
 
 export const Container2 = styled.div`
   height: 400px;
-  backgroundColor: white;
+  background-color: white;
   margin: 20px;
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow:
-          0 14px 28px rgba(0, 0, 0, 0.25),
-          0 10px 10px rgba(0, 0, 0, 0.22);
+    0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
 `;
 
 export const TitleContainer = styled.div`
@@ -31,7 +31,7 @@ export const TitleContainer = styled.div`
 `;
 
 interface DivProps {
-    done?: boolean;
+  done?: boolean;
 }
 
 export const DoneContainer = styled.div<DivProps>`

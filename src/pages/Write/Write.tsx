@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import Form from "react-bootstrap/Form";
 import useInput from "../../hooks/useInput";
 import useArrayInput from "../../hooks/useArrayInput";
@@ -7,7 +7,7 @@ import WriteContainer2 from "./Components/WriteContainer2";
 import WriteContainer3 from "./Components/WriteContainer3";
 import WriteContainer4 from "./Components/WriteContainer4";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { useMutation, useQueryClient } from "react-query";
 import { addRecipe } from "../../api/recipes";
@@ -17,7 +17,6 @@ import Swal from "sweetalert2";
 
 const Write = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { user }: { user: UserState["user"] } = useSelector(
     (state: RootState) => state.user
   );
@@ -50,14 +49,14 @@ const Write = () => {
 
   const queryClient = useQueryClient();
   const { mutate: addRecipe_Mutate } = useMutation(addRecipe, {
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries("recipes");
     },
   });
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (title.length < 5 || title.length > 20) {
+    if (!title || title.length < 5 || title.length > 20) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -66,7 +65,7 @@ const Write = () => {
       return;
     }
 
-    if (subtitle.length < 10) {
+    if (subtitle && subtitle.length < 10) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -113,7 +112,7 @@ const Write = () => {
     navigate("/");
   };
 
-  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const selectedFile = e.target.files[0];
       setFile(selectedFile);
@@ -124,6 +123,7 @@ const Write = () => {
       reader.readAsDataURL(selectedFile);
     }
   };
+
   return (
     <>
       <div>
@@ -149,9 +149,9 @@ const Write = () => {
           delIdxIngredients={delIdxIngredients}
         />
         <WriteContainer3
+          contentArr={contentArr}
           onChangeContentArr={onChangeContentArr}
           addContentArr={addContentArr}
-          contentArr={contentArr}
           deleteContentArr={deleteContentArr}
           delIdxContentArr={delIdxContentArr}
         />
