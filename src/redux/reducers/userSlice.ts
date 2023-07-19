@@ -19,11 +19,8 @@ export interface UserState {
 }
 
 export interface UserResponse {
-  userResponse: Omit<
-    UserState["user"],
-    "isLogged" | "token" | "profileContent"
-  >;
-  token: string;
+  email: string;
+  nickname: string;
 }
 
 const initialState: UserState = {
@@ -45,8 +42,8 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     LOGIN_USER: (state: UserState, action: PayloadAction<UserResponse>) => {
-      state.user.email = action.payload.userResponse.email;
-      state.user.nickname = action.payload.userResponse.nickname;
+      state.user.email = action.payload.email;
+      state.user.nickname = action.payload.nickname;
       // state.user.token = action.payload.token;
       // localStorage.setItem(LocalStorageKey.Token, action.payload.token);
       state.user.isLogged = true;
@@ -64,8 +61,8 @@ const userSlice = createSlice({
       state.user.imageUrl = action.payload;
     },
     AUTH_USER: (state: UserState, action: PayloadAction<UserResponse>) => {
-      state.user.email = action.payload.userResponse.email;
-      state.user.nickname = action.payload.userResponse.nickname;
+      state.user.email = action.payload.email;
+      state.user.nickname = action.payload.nickname;
       state.user.isLogged = true;
     },
     UNAUTH_USER: (state: UserState) => {

@@ -64,7 +64,7 @@ const Detail = () => {
     commentSuccess &&
     !load && (
       <>
-        {!update ? (
+        {!update && recipe ? (
           <div style={{ textAlign: "left" }}>
             <DetailContainer1
               title={recipe.title}

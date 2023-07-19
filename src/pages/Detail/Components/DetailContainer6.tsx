@@ -26,7 +26,7 @@ const DetailContainer6 = ({ recipeId }) => {
       return { oldData };
     },
     onError: (err, newComment, context) => {
-      queryClient.setQueryData(["comment", recipeId], context.oldData);
+      queryClient.setQueryData(["comment", recipeId], context?.oldData);
     },
     onSettled: () => {
       queryClient.invalidateQueries(["comment", recipeId]);
