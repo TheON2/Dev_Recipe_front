@@ -1,7 +1,5 @@
 import React from "react";
 import RecipeCard from "../../components/RecipeCard/RecipeCard";
-import { useSelector } from "react-redux";
-import { RootState } from "../../type/local";
 import { useQuery } from "react-query";
 import { getRecipes } from "../../api/recipes";
 

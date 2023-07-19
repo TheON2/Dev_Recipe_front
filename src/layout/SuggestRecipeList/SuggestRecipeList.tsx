@@ -1,6 +1,5 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
-import { LayOut } from "./style";
 import RecentCard from "./Components/RecentCard";
 
 const SuggestRecipeList = () => {

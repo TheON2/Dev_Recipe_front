@@ -1,12 +1,6 @@
 import React from "react";
 import { Container2 } from "../style";
-import Row from "react-bootstrap/Row";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
-import { Figure, Image } from "react-bootstrap";
 import CommentBox from "./CommentBox";
-import { RootState } from "../../../type/local";
-import { useSelector } from "react-redux";
 
 const DetailContainer5 = ({ comments, recipeId, user }) => {
   return (

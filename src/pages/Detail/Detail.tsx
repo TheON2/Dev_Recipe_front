@@ -5,8 +5,8 @@ import DetailContainer3 from "./Components/DetailContainer3";
 import DetailContainer4 from "./Components/DetailContainer4";
 import DetailContainer5 from "./Components/DetailContainer5";
 import DetailContainer6 from "./Components/DetailContainer6";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { RootState } from "../../type/local";
 import { useQuery } from "react-query";
 import { getComments, getContents, getRecipe } from "../../api/recipes";
@@ -14,8 +14,6 @@ import { UserState } from "../../redux/reducers/userSlice";
 import Update from "../Update/Update";
 
 const Detail = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const params = useParams();
   const [recipe, setRecipe] = useState(null);
   const [splitCategories, setSplitCategories] = useState([]);
@@ -25,7 +23,7 @@ const Detail = () => {
     (state: RootState) => state.user
   );
 
-  const { isError, data, isSuccess } = useQuery(
+  const { isError, isSuccess } = useQuery(
     ["recipe", params.id],
     () => getRecipe(params.id),
     {
@@ -35,16 +33,16 @@ const Detail = () => {
       },
     }
   );
-  const {
-    isError: contentError,
-    data: contentArr,
-    isSuccess: contentSuccess,
-  } = useQuery(["content", params.id], () => getContents(params.id), {});
-  const {
-    isError: commentError,
-    data: commentArr,
-    isSuccess: commentSuccess,
-  } = useQuery(["comment", params.id], () => getComments(params.id), {});
+  const { data: contentArr, isSuccess: contentSuccess } = useQuery(
+    ["content", params.id],
+    () => getContents(params.id),
+    {}
+  );
+  const { data: commentArr, isSuccess: commentSuccess } = useQuery(
+    ["comment", params.id],
+    () => getComments(params.id),
+    {}
+  );
 
   useEffect(() => {
     if (isSuccess && contentSuccess && commentSuccess) {
