@@ -43,7 +43,7 @@ const RecipeCard = ({ imageUrl, title, subtitle, id }) => {
                 ? imageUrl
                 : "https://img.freepik.com/free-photo/assortment-of-vegetables-herbs-and-spices-on-black-background-top-view-copy-space_123827-21707.jpg"
             }
-            style={{ width: "300px" }}
+            style={{ width: "300px", height: "200px" }}
           />
           <Card.Body>
             <Card.Title>{title ? title : "대강 맛있는 요리 이름"}</Card.Title>
