@@ -20,7 +20,7 @@ import { AxiosError } from "axios";
 
 const SignUp = () => {
   const [email, onChangeEmail] = useInput("");
-  const [nickName, onChangeNickname] = useInput("");
+  const [nickname, onChangeNickname] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [confirmPassword, onChangeConfirmPassword] = useInput("");
   const [confirMessage, , setComfirmMessage] = useInput("");
@@ -42,11 +42,11 @@ const SignUp = () => {
       pattern.test(typeof email === "string" ? email : "") &&
       password.length >= 1 &&
       confirmPassword.length >= 1 &&
-      nickName.length >= 1
+      nickname.length >= 1
     )
       setSignUp(true);
     else setSignUp(false);
-  }, [email, password, confirmPassword, nickName, setSignUp]);
+  }, [email, password, confirmPassword, nickname, setSignUp]);
 
   const goLogin = () => {
     navigate("/Login");
@@ -63,7 +63,7 @@ const SignUp = () => {
     checkLogin();
   }, [
     email,
-    nickName,
+    nickname,
     password,
     confirmPassword,
     setComfirmMessage,
@@ -80,7 +80,7 @@ const SignUp = () => {
     const newUser = {
       email,
       password,
-      nickName,
+      nickname,
     };
     addUser_mutate(newUser);
     console.log(`Email: ${email}, Password: ${password}`);
@@ -127,7 +127,7 @@ const SignUp = () => {
           <Input
             type="nickName"
             placeholder="NickName"
-            value={nickName}
+            value={nickname}
             onChange={onChangeNickname}
           />
           <Input

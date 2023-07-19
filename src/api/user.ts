@@ -3,16 +3,14 @@ import { UserResponse } from "../redux/reducers/userSlice";
 
 interface User {
   email: string | null;
-  nickName: string | null;
+  nickname: string | null;
   imageUrl: string | null;
-  profileContent: string | null;
-  profileUrl: string | null;
 }
 
 interface NewUser {
   email: string;
   password: string;
-  nickName: string;
+  nickname: string;
 }
 
 interface LoginUser {
