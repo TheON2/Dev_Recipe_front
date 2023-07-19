@@ -5,6 +5,7 @@ import store from "../redux/config/configStore";
 const instance = axios.create({
   //baseURL: import.meta.env.VITE_APP_LOCAL_SERVER,
   baseURL: "https://devandrecipe.shop",
+  withCredentials: true,
 });
 
 instance.interceptors.request.use(
