@@ -19,7 +19,7 @@ const RecipeList = () => {
           key={recipe.title}
           title={recipe.title}
           subtitle={recipe.subtitle}
-          imageUrl={undefined}
+          imageUrl={recipe.url}
         />
       ))}
     </>
