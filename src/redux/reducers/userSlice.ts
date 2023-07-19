@@ -19,9 +19,10 @@ export interface UserState {
 }
 
 export interface UserResponse {
-  userResponse: Omit<UserState["user"], "isLogged" | "token"> & {
-    profileUrl: string;
-  };
+  userResponse: Omit<
+    UserState["user"],
+    "isLogged" | "token" | "profileContent"
+  >;
   token: string;
 }
 
@@ -46,8 +47,6 @@ const userSlice = createSlice({
     LOGIN_USER: (state: UserState, action: PayloadAction<UserResponse>) => {
       state.user.email = action.payload.userResponse.email;
       state.user.nickName = action.payload.userResponse.nickName;
-      state.user.profileContent = action.payload.userResponse.profileContent;
-      state.user.imageUrl = action.payload.userResponse.profileUrl;
       state.user.token = action.payload.token;
       localStorage.setItem(LocalStorageKey.Token, action.payload.token);
       state.user.isLogged = true;
@@ -67,8 +66,6 @@ const userSlice = createSlice({
     AUTH_USER: (state: UserState, action: PayloadAction<UserResponse>) => {
       state.user.email = action.payload.userResponse.email;
       state.user.nickName = action.payload.userResponse.nickName;
-      state.user.profileContent = action.payload.userResponse.profileContent;
-      state.user.imageUrl = action.payload.userResponse.profileUrl;
       state.user.isLogged = true;
     },
     UNAUTH_USER: (state: UserState) => {
@@ -83,7 +80,12 @@ const userSlice = createSlice({
   },
 });
 
-export const { LOGIN_USER, LOGOUT_USER, AUTH_USER, UNAUTH_USER, LOAD_PROFILE_IMAGE } =
-  userSlice.actions;
+export const {
+  LOGIN_USER,
+  LOGOUT_USER,
+  AUTH_USER,
+  UNAUTH_USER,
+  LOAD_PROFILE_IMAGE,
+} = userSlice.actions;
 
 export default userSlice.reducer;
