@@ -91,7 +91,7 @@ const Detail = () => {
               />
             ))}
             <DetailContainer4
-              nickName={user.nickName}
+              nickName={user.nickname}
               imageUrl={user.imageUrl}
               profileContent={user.profileContent}
             />

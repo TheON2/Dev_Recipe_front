@@ -7,7 +7,7 @@ export enum LocalStorageKey {
 export interface UserState {
   user: {
     email: string | null;
-    nickName: string | null;
+    nickname: string | null;
     isLogged: boolean;
     token: string | null | undefined;
     logInLoading: boolean;
@@ -29,7 +29,7 @@ export interface UserResponse {
 const initialState: UserState = {
   user: {
     email: null,
-    nickName: null,
+    nickname: null,
     isLogged: false,
     token: null,
     logInLoading: false,
@@ -46,9 +46,9 @@ const userSlice = createSlice({
   reducers: {
     LOGIN_USER: (state: UserState, action: PayloadAction<UserResponse>) => {
       state.user.email = action.payload.userResponse.email;
-      state.user.nickName = action.payload.userResponse.nickName;
-      state.user.token = action.payload.token;
-      localStorage.setItem(LocalStorageKey.Token, action.payload.token);
+      state.user.nickname = action.payload.userResponse.nickname;
+      // state.user.token = action.payload.token;
+      // localStorage.setItem(LocalStorageKey.Token, action.payload.token);
       state.user.isLogged = true;
     },
     LOGOUT_USER: (state: UserState) => {
@@ -57,15 +57,15 @@ const userSlice = createSlice({
       state.user.isLogged = false;
       state.user.profileContent = null;
       state.user.imageUrl = null;
-      state.user.nickName = null;
-      localStorage.removeItem(LocalStorageKey.Token);
+      state.user.nickname = null;
+      //localStorage.removeItem(LocalStorageKey.Token);
     },
     LOAD_PROFILE_IMAGE: (state: UserState, action: PayloadAction<string>) => {
       state.user.imageUrl = action.payload;
     },
     AUTH_USER: (state: UserState, action: PayloadAction<UserResponse>) => {
       state.user.email = action.payload.userResponse.email;
-      state.user.nickName = action.payload.userResponse.nickName;
+      state.user.nickname = action.payload.userResponse.nickname;
       state.user.isLogged = true;
     },
     UNAUTH_USER: (state: UserState) => {
@@ -73,9 +73,9 @@ const userSlice = createSlice({
       state.user.isLogged = false;
       state.user.profileContent = null;
       state.user.imageUrl = null;
-      state.user.nickName = null;
+      state.user.nickname = null;
       state.user.token = undefined;
-      localStorage.removeItem(LocalStorageKey.Token);
+      //localStorage.removeItem(LocalStorageKey.Token);
     },
   },
 });
