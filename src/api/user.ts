@@ -39,7 +39,6 @@ const getAuthToken = async (): Promise<string> => {
 
 const userLogin = async (loginUser: LoginUser): Promise<UserResponse> => {
   const response = await api.post(`/api/user/login`, loginUser);
-  console.log(response.data);
   return response.data;
 };
 
